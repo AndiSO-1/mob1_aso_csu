@@ -5,12 +5,16 @@ import {
   TextInput,
   Button,
   ListItem,
-  Picker } from 'react-native';
-
-import {
+  Picker,
   StyleSheet,
-  View,
+  View
 } from 'react-native';
+
+// Contexts
+import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
+
+// Components
+import Home from "../components/Home";
 
 export default class Login extends Component {
   constructor(props) {
@@ -61,7 +65,9 @@ export default class Login extends Component {
       this.setState({
         connection_fail: false
       });
+      this.context.changeIsLogged(true);
       window.localStorage.setItem("token", token);
+      this.props.navigation.navigate('Home');
     }
     else {
       this.setState({
@@ -140,6 +146,8 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.contextType = LoginContext;
 
 const styles = StyleSheet.create({
   input: {
