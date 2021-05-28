@@ -58,6 +58,9 @@ export default class Login extends Component {
     });
 
     if (!connection_fail) {
+      this.setState({
+        connection_fail: false
+      });
       window.localStorage.setItem("token", token);
     }
     else {
