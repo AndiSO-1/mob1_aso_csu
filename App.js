@@ -42,11 +42,19 @@ export default class App extends Component {
     });
   }
 
+  logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id_base");
+    this.changeToken(null);
+  }
+
   render(){
     return (
       <LoginContext.Provider
         value={
             {
+              token: this.state.token,
+
               changeToken: this.changeToken,
               changeBase: this.changeBase,
             }
@@ -58,21 +66,27 @@ export default class App extends Component {
                 name="Home"
                 component={Home}
                 options={{
-                  headerRight: () => (<BtnLogout/>),
+                  headerRight: () => (
+                    <BtnLogout logout={this.logout}/>
+                  ),
                 }}
               />
               <Stack.Screen
                 name="Consult"
                 component={Consult}
                 options={{
-                  headerRight: () => (<BtnLogout/>),
+                  headerRight: () => (
+                    <BtnLogout logout={this.logout}/>
+                  ),
                 }}
               />
               <Stack.Screen
                 name="Report"
                 component={Report}
                 options={{
-                  headerRight: () => (<BtnLogout/>),
+                  headerRight: () => (
+                    <BtnLogout logout={this.logout}/>
+                  ),
                 }}
               />
             </Stack.Navigator>

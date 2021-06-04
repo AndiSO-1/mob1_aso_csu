@@ -7,14 +7,16 @@ import {
 } from 'react-native';
 
 export default class BtnLogout extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   render() {
     return (
         <Button
-          onPress={() => {
-            localStorage.removeItem("token");
-            localStorage.removeItem("id_base");
-            this.changeToken(null);
-          }}
+          onPress={this.props.logout}
           title="Logout"
           color="#000"
         />
