@@ -21,7 +21,9 @@ export default class Login extends Component {
     super(props);
 
     this.getBases = this.getBases.bind(this);
-    this._onPressButton = this._onPressButton.bind(this);
+    this.login = this.login.bind(this);
+
+    this.api = 'http://127.0.0.1:8000/api/';
 
     this.state = {
       bases: [],
@@ -32,13 +34,12 @@ export default class Login extends Component {
     };
   }
 
-  async _onPressButton() {
-    let str_api = 'http://127.0.0.1:8000/api/';
+  async login() {
     let initials = this.state.initials;
     let password = this.state.password;
     let connection_fail = false;
 
-    let token = await fetch(str_api + 'gettoken', {
+    let token = await fetch(this.api + 'gettoken', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -77,9 +78,7 @@ export default class Login extends Component {
   }
 
   async getBases(_this){
-    let str_api = 'http://127.0.0.1:8000/api/';
-
-    let bases =  await fetch(str_api + 'bases', {
+    let bases =  await fetch(this.api + 'bases', {
       method: 'GET',
     })
     .then(function(response) {
@@ -100,7 +99,7 @@ export default class Login extends Component {
     this.setState({
       bases: bases,
     });
-    this.updateBase(bases[0].id ?? '')
+    this.updateBase(bases ? bases[0].id : '')
   }
 
   handleText(input, value) {
@@ -145,7 +144,7 @@ export default class Login extends Component {
         </Picker>
 
         <Button
-          onPress={this._onPressButton}
+          onPress={this.login}
           title="Se connecter"
         />
       </View>
