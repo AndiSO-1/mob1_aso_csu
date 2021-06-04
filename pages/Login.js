@@ -14,7 +14,7 @@ import {
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
 // Components
-import Home from "../components/Home";
+import Home from "../pages/Home";
 
 export default class Login extends Component {
   constructor(props) {
@@ -65,8 +65,8 @@ export default class Login extends Component {
       this.setState({
         connection_fail: false
       });
-      this.context.changeIsLogged(true);
-      window.localStorage.setItem("token", token);
+      this.context.changeToken(token);
+      localStorage.setItem("token", token);
       this.props.navigation.navigate('Home');
     }
     else {
@@ -98,8 +98,9 @@ export default class Login extends Component {
     });
 
     this.setState({
-      bases: bases
+      bases: bases,
     });
+    this.updateBase(bases[0].id ?? '')
   }
 
   handleText(input, value) {
@@ -112,10 +113,15 @@ export default class Login extends Component {
     this.getBases();
   }
 
+  updateBase = (base) => {
+    this.setState({
+      base: base
+    });
+    this.context.changeBase(base);
+    localStorage.setItem("id_base", base);
+  }
+
   render() {
-    let updateBase = (base) => {
-      this.setState({ base: base })
-    }
 
     return (
       <View>
@@ -131,7 +137,7 @@ export default class Login extends Component {
           onChangeText={(text) => this.handleText("password", text)}
         />
 
-        <Picker selectedValue={this.state.base} onValueChange={updateBase}>
+        <Picker selectedValue={this.state.base} onValueChange={this.updateBase}>
           {this.state.bases == [] ? <Text>nothing</Text> : (
             this.state.bases.map(b =>
               <Picker.Item key={b.id} label={b.name} value={b.id} />)

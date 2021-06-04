@@ -8,9 +8,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Contexts
 import { LoginContext } from './contexts/LoginContext'; // Perm login to change user status
 
+// Pages
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Consult from "./pages/Consult";
+import Report from "./pages/Report";
+
 // Components
-import Home from "./components/Home";
-import Login from "./components/Login";
+import BtnLogout from "./components/BtnLogout";
 
 const Stack = createStackNavigator();
 
