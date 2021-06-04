@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Button } from 'react-native';
+import { StyleSheet, Button, Text } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -25,14 +25,21 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      is_logged : false,
+      token : localStorage.getItem('token') ?? null,
+      base: localStorage.getItem('id_base') ?? "",
     };
   }
 
-  changeIsLogged = (val) => {
+  changeToken = (val) => {
     this.setState({
-      is_logged: val,
-    })
+      token: val,
+    });
+  }
+
+  changeBase = (val) => {
+    this.setState({
+      base: val,
+    });
   }
 
   render(){
@@ -40,26 +47,32 @@ export default class App extends Component {
       <LoginContext.Provider
         value={
             {
-              changeIsLogged: this.changeIsLogged
+              changeToken: this.changeToken,
+              changeBase: this.changeBase,
             }
           }>
         <NavigationContainer>
-          {this.state.is_logged ? (
+          {this.state.token ? (
             <Stack.Navigator>
               <Stack.Screen
                 name="Home"
                 component={Home}
                 options={{
-                  headerRight: () => (
-                    <Button
-                      onPress={() => {
-                        window.localStorage.removeItem("token");
-                        this.changeIsLogged(false);
-                      }}
-                      title="Logout"
-                      color="#000"
-                    />
-                  ),
+                  headerRight: () => (<BtnLogout/>),
+                }}
+              />
+              <Stack.Screen
+                name="Consult"
+                component={Consult}
+                options={{
+                  headerRight: () => (<BtnLogout/>),
+                }}
+              />
+              <Stack.Screen
+                name="Report"
+                component={Report}
+                options={{
+                  headerRight: () => (<BtnLogout/>),
                 }}
               />
             </Stack.Navigator>
