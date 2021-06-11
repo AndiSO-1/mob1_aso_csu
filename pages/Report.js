@@ -12,6 +12,7 @@ import {
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
 // Components
+import PharmaCheck from "../components/PharmaCheck";
 import NovaCheck from "../components/NovaCheck";
 
 export default class Report extends Component {
@@ -93,7 +94,7 @@ export default class Report extends Component {
             {this.state.show == "pharma" ? this.state.pharma.length <= 0 ? <Text>Aucune information</Text> :
               <FlatList
                 data={this.state.pharma}
-                renderItem={({item}) => <Text>Du lot {item.batch_number} de {item.drug} pour le {item.date} Matin: {item.start || 0} Soir: {item.end || 0} Envoyer</Text>}
+                renderItem={({item}) => <PharmaCheck data={item} api={this.api} token={this.context.token}/>}
                 keyExtractor={(item, index) => index.toString()}
               />
               : null
