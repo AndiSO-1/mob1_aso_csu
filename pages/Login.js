@@ -67,6 +67,8 @@ export default class Login extends Component {
         connection_fail: false
       });
       this.context.changeToken(token);
+      // Return the base id and base name to the context
+      this.context.changeBase(this.state.base, this.state.bases.find(base => base.id == this.state.base).name);
       this.props.navigation.navigate('Home');
     }
     else {
@@ -98,7 +100,7 @@ export default class Login extends Component {
     this.setState({
       bases: bases,
     });
-    this.updateBase(bases ? bases[0].id : '')
+    this.updateBase(bases ? bases[0].id : '');
   }
 
   handleText(input, value) {
@@ -111,11 +113,10 @@ export default class Login extends Component {
     this.getBases();
   }
 
-  updateBase = (base) => {
+  updateBase = (val) => {
     this.setState({
-      base: base
+      base: val
     });
-    this.context.changeBase(base);
   }
 
   render() {

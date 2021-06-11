@@ -26,7 +26,10 @@ export default class App extends Component {
 
     this.state = {
       token : localStorage.getItem('token') ?? null,
-      base: localStorage.getItem('base') ?? "",
+      base: {
+        id:(localStorage.getItem('base_id') ?? ""),
+        name:(localStorage.getItem('base_name') ?? ""),
+      },
     };
   }
 
@@ -37,16 +40,21 @@ export default class App extends Component {
     localStorage.setItem("token", val);
   }
 
-  changeBase = (val) => {
+  changeBase = (id, name) => {
     this.setState({
-      base: val,
+      base: {
+        id: id,
+        name: name,
+      },
     });
-    localStorage.setItem("base", val);
+    localStorage.setItem("base_id", id);
+    localStorage.setItem("base_name", name);
   }
 
   logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("base");
+    localStorage.removeItem("base_id");
+    localStorage.removeItem("base_name");
     this.changeToken(null);
   }
 
@@ -56,6 +64,7 @@ export default class App extends Component {
         value={
             {
               token: this.state.token,
+              base: this.state.base,
 
               changeToken: this.changeToken,
               changeBase: this.changeBase,
