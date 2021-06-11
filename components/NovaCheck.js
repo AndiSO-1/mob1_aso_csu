@@ -21,6 +21,35 @@ export default class NoveCheck extends Component {
   }
 
   async updateNovaBulb() {
+    let token = this.props.token;
+    console.log(this.state);
+    fetch(this.props.api + 'novacheck', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        nova_id: this.props.data.nova_id,
+        drug_id: this.props.data.drug_id,
+        drugsheet_id: this.props.data.drugsheet_id,
+        date: this.props.data.date,
+        start: this.state.start,
+        end: this.state.end,
+      })
+    })
+    .then(function(response) {
+      if(response.ok) {
+        alert("Changement réussi");
+      }
+      else {
+        console.log('Mauvaise réponse du réseau');
+      }
+    })
+    .catch(function(error) {
+      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+    });
   }
 
   formatDate = (val) => {
