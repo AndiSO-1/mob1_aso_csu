@@ -76,7 +76,7 @@ export default class Login extends Component {
     }
   }
 
-  async getBases(_this){
+  async getBases(){
     let bases =  await fetch(this.api + 'bases', {
       method: 'GET',
     })
