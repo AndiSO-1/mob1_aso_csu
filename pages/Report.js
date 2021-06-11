@@ -11,6 +11,9 @@ import {
 // Contexts
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
+// Components
+import NovaCheck from "../components/NovaCheck";
+
 export default class Report extends Component {
   constructor(props) {
     super(props);
@@ -97,9 +100,9 @@ export default class Report extends Component {
             }
             {this.state.show == "nova" ? this.state.nova.length <= 0 ? <Text>Aucune information</Text> :
               <FlatList
-              data={this.state.nova}
-              renderItem={({item}) => <Text>Du lot {item.batch_number} de {item.drug} pour le {item.date} Matin: {item.start || 0} Soir: {item.end || 0} Envoyer</Text>}
-              keyExtractor={(item, index) => index.toString()}
+                data={this.state.nova}
+                renderItem={({item}) => <NovaCheck data={item} api={this.api} token={this.context.token}/>}
+                keyExtractor={(item, index) => index.toString()}
               />
               : null
             }
