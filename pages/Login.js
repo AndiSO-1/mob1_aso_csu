@@ -67,7 +67,6 @@ export default class Login extends Component {
         connection_fail: false
       });
       this.context.changeToken(token);
-      localStorage.setItem("token", token);
       this.props.navigation.navigate('Home');
     }
     else {
@@ -117,7 +116,6 @@ export default class Login extends Component {
       base: base
     });
     this.context.changeBase(base);
-    localStorage.setItem("id_base", base);
   }
 
   render() {
