@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Consult from "./pages/Consult";
 import Report from "./pages/Report";
+import ShiftActions from "./pages/ShiftActions";
 
 // Components
 import BtnLogout from "./components/BtnLogout";
@@ -94,6 +95,15 @@ export default class App extends Component {
               <Stack.Screen
                 name="Report"
                 component={Report}
+                options={{
+                  headerRight: () => (
+                    <BtnLogout logout={this.logout}/>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="ShiftActions"
+                component={ShiftActions}
                 options={{
                   headerRight: () => (
                     <BtnLogout logout={this.logout}/>

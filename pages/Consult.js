@@ -87,7 +87,19 @@ export default class Consult extends Component {
             {this.state.show == "shift" ? this.state.shift.length <= 0 ? <Text>Aucune information</Text> :
               <FlatList
                 data={this.state.shift}
-                renderItem={({item}) => <Text>Le {item.date} à {item.base}</Text>}
+                renderItem={
+                  ({item}) =>
+                    <Text
+                      onPress={
+                        () =>this.props.navigation.navigate('ShiftActions', {
+                          id: item.id,
+                          title: ("Dans le rapport du " + item.date + " à " + item.base)
+                        })
+                      }
+                    >
+                      Le {item.date} à {item.base}
+                    </Text>
+                  }
                 keyExtractor={item => item.id.toString()}
               />
               : null
