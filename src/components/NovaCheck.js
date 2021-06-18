@@ -22,7 +22,7 @@ export default class NoveCheck extends Component {
 
   async updateNovaBulb() {
     let token = this.props.token;
-    console.log(this.state);
+
     fetch(this.props.api + 'novacheck', {
       method: 'POST',
       headers: {

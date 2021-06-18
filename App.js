@@ -20,7 +20,6 @@ import BtnLogout from "./src/components/BtnLogout";
 
 const Stack = createStackNavigator();
 
-// window.localStorage.getItem("token") récup le storage
 export default class App extends Component {
   constructor(props) {
     super(props);
