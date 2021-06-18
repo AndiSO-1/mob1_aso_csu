@@ -28,6 +28,9 @@ export default class Report extends Component {
 
     this.api = 'http://127.0.0.1:8000/api/';
 
+    this.show_pharma = "pharma";
+    this.show_nova = "nova";
+
     this.state = {
       pharma: [],
       nova: [],
@@ -73,13 +76,13 @@ export default class Report extends Component {
 
   showPharma = () => {
     this.setState({
-      show: "pharma"
+      show: this.show_pharma
     });
   }
 
   showNova = () => {
     this.setState({
-      show: "nova"
+      show: this.show_nova
     });
   }
 
@@ -127,6 +130,8 @@ export default class Report extends Component {
             }
           </View>
         </View>
+          {this.state.show == this.show_pharma ? this.state.pharma.length <= 0 ? <Text>Aucune information</Text> :
+          {this.state.show == this.show_nova ? this.state.nova.length <= 0 ? <Text>Aucune information</Text> :
     );
   }
 }
