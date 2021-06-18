@@ -28,6 +28,7 @@ export default class NoveCheck extends Component {
   async updateNovaBulb() {
     let token = this.props.token;
     let success_message = "Modification faite : " + this.props.data.drug + " de la nova " + this.props.data.nova;
+    let fun_success = this.props.success;
 
     fetch(this.props.api + 'novacheck', {
       method: 'POST',
@@ -52,6 +53,7 @@ export default class NoveCheck extends Component {
           text1: 'Modification réussi!',
           text2: success_message
         });
+        fun_success();
       }
       else {
         Toast.show(manageException(response.status));

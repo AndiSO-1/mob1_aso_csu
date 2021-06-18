@@ -83,6 +83,14 @@ export default class Report extends Component {
     });
   }
 
+  removeNova = (index) => {
+    let nova = this.state.nova;
+    nova.splice(index, 1);
+    this.setState({
+      nova: nova,
+    });
+  }
+
   componentDidMount () {
     this.getMissingChecks();
   }
@@ -112,7 +120,7 @@ export default class Report extends Component {
             {this.state.show == "nova" ? this.state.nova.length <= 0 ? <Text>Aucune information</Text> :
               <FlatList
                 data={this.state.nova}
-                renderItem={({item}) => <NovaCheck data={item} api={this.api} token={this.context.token}/>}
+                renderItem={({item, index}) => <NovaCheck data={item} api={this.api} token={this.context.token} success={() => this.removeNova(index)}/>}
                 keyExtractor={(item, index) => index.toString()}
               />
               : null
