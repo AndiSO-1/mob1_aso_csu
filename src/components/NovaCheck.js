@@ -74,7 +74,8 @@ export default class NoveCheck extends Component {
     return ("0" + dd).slice(-2) + '/' + ("0" + mm).slice(-2) + '/' + yyyy;
   }
 
-  handleText(input, value) {
+  handleNumericText(input, value) {
+    value = value ? parseInt(value) : 0
     this.setState({
       [input]: value
     });
@@ -88,14 +89,14 @@ export default class NoveCheck extends Component {
         <Text>
           Matin: <TextInput
             style={styles.input}
-            onChangeText={(text) => this.handleText("start", text)}
+            onChangeText={(text) => this.handleNumericText("start", text)}
             value={this.state.start}
           />
           </Text>
           <Text>
           Soir: <TextInput
             style={styles.input}
-            onChangeText={(text) => this.handleText("end", text)}
+            onChangeText={(text) => this.handleNumericText("end", text)}
             value={this.state.end}
           />
         </Text>
