@@ -6,17 +6,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Contexts
-import { LoginContext } from './contexts/LoginContext'; // Perm login to change user status
+import { LoginContext } from './src/contexts/LoginContext'; // Perm login to change user status
 
 // Pages
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Consult from "./pages/Consult";
-import Report from "./pages/Report";
-import ShiftActions from "./pages/ShiftActions";
+import Home from "./src/pages/Home";
+import Login from "./src/pages/Login";
+import Consult from "./src/pages/Consult";
+import Report from "./src/pages/Report";
+import ShiftActions from "./src/pages/ShiftActions";
 
 // Components
-import BtnLogout from "./components/BtnLogout";
+import BtnLogout from "./src/components/BtnLogout";
 
 const Stack = createStackNavigator();
 

@@ -16,6 +16,8 @@ import { LoginContext } from '../contexts/LoginContext'; // Perm login to change
 // Components
 import Home from "../pages/Home";
 
+import Toast from 'react-native-toast-message';
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +54,13 @@ export default class Login extends Component {
         return response.json();
       }
       else {
+        console.log(response);
         connection_fail = true;
+        Toast.show({
+          type: 'error',
+          text1: 'Hello',
+          text2: 'This is some something 👋'
+        });
       }
     })
     .then(function(data){
