@@ -100,38 +100,45 @@ export default class Report extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Faire un</Text>
-        <Button
-            title="Pharmacheck"
-            onPress={this.showPharma}
-          />
-          <Button
-            title="NovaCheck"
-            onPress={this.showNova}
-          />
-          <Text>à {this.context.base.name}</Text>
-          <View>
-            {this.state.show == "pharma" ? this.state.pharma.length <= 0 ? <Text>Aucune information</Text> :
-              <FlatList
-                data={this.state.pharma}
-                renderItem={({item}) => <PharmaCheck data={item} api={this.api} token={this.context.token}/>}
-                keyExtractor={(item, index) => index.toString()}
+      <View style={styles.container}>
+        <View style={styles.nav}>
+          <View style={styles.nav_child}>
+              <Button
+                color={this.state.show == this.show_pharma ? "black" : ""}
+                title="Pharmacheck"
+                onPress={this.showPharma}
               />
-              : null
-            }
-            {this.state.show == "nova" ? this.state.nova.length <= 0 ? <Text>Aucune information</Text> :
-              <FlatList
-                data={this.state.nova}
-                renderItem={({item, index}) => <NovaCheck data={item} api={this.api} token={this.context.token} success={() => this.removeNova(index)}/>}
-                keyExtractor={(item, index) => index.toString()}
+            </View>
+            <View style={styles.nav_child}>
+              <Button
+                color={this.state.show == this.show_nova ? "black" : ""}
+                title="NovaCheck"
+                onPress={this.showNova}
               />
-              : null
-            }
           </View>
         </View>
+
+        <Text style={styles.title}>À {this.context.base.name}</Text>
+
+        <View>
           {this.state.show == this.show_pharma ? this.state.pharma.length <= 0 ? <Text>Aucune information</Text> :
+            <FlatList
+              data={this.state.pharma}
+              renderItem={({item}) => <PharmaCheck data={item} api={this.api} token={this.context.token}/>}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            : null
+          }
           {this.state.show == this.show_nova ? this.state.nova.length <= 0 ? <Text>Aucune information</Text> :
+            <FlatList
+              data={this.state.nova}
+              renderItem={({item, index}) => <NovaCheck data={item} api={this.api} token={this.context.token} success={() => this.removeNova(index)}/>}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            : null
+          }
+        </View>
+      </View>
     );
   }
 }
@@ -139,5 +146,22 @@ export default class Report extends Component {
 Report.contextType = LoginContext;
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: "start",
+    flexDirection: "column",
+  },
+  nav: {
+    justifyContent: "start",
+    flexDirection: "row",
+    marginBottom: "1em",
+  },
+  nav_child: {
+    flex: 1,
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    marginBottom: "1em",
+  },
 });
