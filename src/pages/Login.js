@@ -16,6 +16,9 @@ import { LoginContext } from '../contexts/LoginContext'; // Perm login to change
 // Components
 import Home from "../pages/Home";
 
+import manageException from "../utils";
+
+// Toast message
 import Toast from 'react-native-toast-message';
 
 export default class Login extends Component {
@@ -32,14 +35,14 @@ export default class Login extends Component {
       base: '',
       initials: '',
       password: '',
-      connection_fail: false,
+      connection_success: true,
     };
   }
 
   async login() {
     let initials = this.state.initials;
     let password = this.state.password;
-    let connection_fail = false;
+    let connection_success = true;
 
     let token = await fetch(this.api + 'gettoken', {
       method: 'POST',
@@ -54,25 +57,24 @@ export default class Login extends Component {
         return response.json();
       }
       else {
-        console.log(response);
-        connection_fail = true;
-        Toast.show({
-          type: 'error',
-          text1: 'Hello',
-          text2: 'This is some something 👋'
-        });
+        connection_success = false;
+        Toast.show(manageException(response.status));
       }
     })
     .then(function(data){
-      return data.token;
+      if (connection_success)
+      {
+        return data.token;
+      }
     })
     .catch(function(error) {
-      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      connection_success = false;
+      Toast.show(manageException());
     });
 
-    if (!connection_fail) {
+    if (connection_success) {
       this.setState({
-        connection_fail: false
+        connection_success: true
       });
       this.context.changeToken(token);
       // Return the base id and base name to the context
@@ -81,12 +83,14 @@ export default class Login extends Component {
     }
     else {
       this.setState({
-        connection_fail: true
+        connection_success: false
       });
     }
   }
 
   async getBases(){
+    let connection_success = true;
+
     let bases =  await fetch(this.api + 'bases', {
       method: 'GET',
     })
@@ -95,20 +99,27 @@ export default class Login extends Component {
         return response.json();
       }
       else {
-        console.log('Mauvaise réponse du réseau');
+        connection_success = false;
+        Toast.show(manageException(response.status));
       }
     })
     .then(function(data){
-      return data;
+      if (connection_success)
+      {
+        return data;
+      }
     })
     .catch(function(error) {
-      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      connection_success = false;
+      Toast.show(manageException());
     });
 
-    this.setState({
-      bases: bases,
-    });
-    this.updateBase(bases ? bases[0].id : '');
+    if (connection_success) {
+      this.setState({
+        bases: bases,
+      });
+      this.updateBase(bases ? bases[0].id : '');
+    }
   }
 
   handleText(input, value) {
@@ -131,8 +142,6 @@ export default class Login extends Component {
 
     return (
       <View>
-        {this.state.connection_fail ? <Text style={styles.error}>Login ou mot de passe incorrect</Text> : null}
-
         <Text>Initiales</Text>
         <TextInput style={styles.input} onChangeText={(text) => this.handleText("initials", text)}/>
 
