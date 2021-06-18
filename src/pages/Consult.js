@@ -11,6 +11,11 @@ import {
 // Contexts
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
+import manageException from "../utils";
+
+// Toast message
+import Toast from 'react-native-toast-message';
+
 export default class Consult extends Component {
   constructor(props) {
     super(props);
@@ -40,14 +45,14 @@ export default class Consult extends Component {
         return response.json();
       }
       else {
-        console.log(response);
+        Toast.show(manageException(response.status));
       }
     })
     .then(function(data){
       return data;
     })
     .catch(function(error) {
-      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      Toast.show(manageException());
     });
 
     this.setState({
