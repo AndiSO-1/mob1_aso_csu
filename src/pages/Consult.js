@@ -24,6 +24,9 @@ export default class Consult extends Component {
 
     this.api = 'http://127.0.0.1:8000/api/';
 
+    this.show_shift = "shift";
+    this.show_drug = "drug";
+
     this.state = {
       shift: [],
       drug: [],
@@ -63,13 +66,13 @@ export default class Consult extends Component {
 
   showShift = () => {
     this.setState({
-      show: "shift"
+      show: this.show_shift
     });
   }
 
   showDrug = () => {
     this.setState({
-      show: "drug"
+      show: this.show_drug
     });
   }
 
@@ -118,6 +121,8 @@ export default class Consult extends Component {
               : null
             }
           </View>
+          {this.state.show == this.show_shift ? this.state.shift.length <= 0 ? <Text>Aucune information</Text> :
+          {this.state.show == this.show_drug ? this.state.drug.length <= 0 ? <Text>Aucune information</Text> :
         </View>
     );
   }
