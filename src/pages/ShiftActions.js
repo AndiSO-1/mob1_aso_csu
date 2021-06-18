@@ -69,13 +69,13 @@ export default class ShiftActions extends Component {
 
   render() {
     return (
-      <View>
-        <Text>{this.props.route.params.title}</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>{this.props.route.params.title}</Text>
         <View>
           {this.state.shift_actions.length <= 0 ? <Text>Aucune information</Text> :
             <FlatList
               data={this.state.shift_actions}
-              renderItem={({item}) => <Text>{item.day ? "J" : "N"} {item.action} {item.at}</Text>}
+              renderItem={({item}) => <Text style={styles.child}>{item.day ? "🌞" : "🌑"} {item.action} / {item.at}</Text>}
               keyExtractor={item => item.id.toString()}
             />
           }
@@ -88,5 +88,22 @@ export default class ShiftActions extends Component {
 ShiftActions.contextType = LoginContext;
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: "start",
+    flexDirection: "column",
+    paddingTop: "1em",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    marginBottom: "2em",
+  },
+  child: {
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    borderColor: "black",
+    borderWidth: 1,
+    marginBottom: "1em",
+  }
 });
