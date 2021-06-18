@@ -84,22 +84,24 @@ export default class NoveCheck extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>De {this.props.data.drug} de la nova {this.props.data.nova}</Text>
-        <Text>pour le {this.formatDate(this.props.data.date)}</Text>
-        <Text>
-          Matin: <TextInput
+        <Text style={styles.title}>De {this.props.data.drug} de la nova {this.props.data.nova}</Text>
+        <Text style={styles.date}>pour le {this.formatDate(this.props.data.date)}</Text>
+        <View style={styles.child}>
+          <Text>Matin</Text>
+          <TextInput
             style={styles.input}
             onChangeText={(text) => this.handleNumericText("start", text)}
             value={this.state.start}
           />
-          </Text>
-          <Text>
-          Soir: <TextInput
+        </View>
+        <View style={styles.child}>
+          <Text>Soir</Text>
+          <TextInput
             style={styles.input}
             onChangeText={(text) => this.handleNumericText("end", text)}
             value={this.state.end}
           />
-        </Text>
+        </View>
         <Button
           onPress={this.updateNovaBulb}
           title="Envoyer"
@@ -111,13 +113,33 @@ export default class NoveCheck extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     borderColor: "black",
     borderWidth: 1,
-    marginVertical:10,
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    paddingRight: "1em",
+    paddingLeft: "1em",
+    marginBottom: "1em",
+    marginRight: "1em",
+    marginLeft: "1em",
   },
   input: {
     borderColor: "black",
     borderWidth:1,
+    textAlign: "center",
+    backgroundColor: 'white',
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 15,
+  },
+  date: {
+    textAlign: "center",
+    marginBottom: "1em",
+  },
+  child: {
+    marginBottom: "1em",
+    textAlign: "center",
   },
 });
