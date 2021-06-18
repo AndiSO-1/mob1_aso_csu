@@ -100,10 +100,15 @@ const styles = StyleSheet.create({
     marginBottom: "2em",
   },
   child: {
+    backgroundColor: 'lightblue',
     paddingTop: "1em",
     paddingBottom: "1em",
+    paddingRight: "1em",
+    paddingLeft: "1em",
     borderColor: "black",
     borderWidth: 1,
     marginBottom: "1em",
+    marginRight: "1em",
+    marginLeft: "1em",
   }
 });
