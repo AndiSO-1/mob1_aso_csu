@@ -5,8 +5,8 @@ const manageException = (code = null) => {
     case 401:
     return {
       type: 'error',
-      text1: 'Erreur 401',
-      text2: "Vous n'êtes pas authorizé à vous connecter.\nVeuillez vérifier vos identifiants avant de réessayer!"
+      text1: "Vous n'êtes pas authorizé à vous connecter.",
+      text2: "Veuillez vérifier vos identifiants avant de réessayer!"
     };
     break;
     default:
