@@ -18,6 +18,9 @@ import ShiftActions from "./src/pages/ShiftActions";
 // Components
 import BtnLogout from "./src/components/BtnLogout";
 
+// Toast message
+import Toast, { BaseToast } from 'react-native-toast-message';
+
 const Stack = createStackNavigator();
 
 export default class App extends Component {
@@ -118,6 +121,7 @@ export default class App extends Component {
               />
             </Stack.Navigator>
           )}
+          <Toast ref={(ref) => Toast.setRef(ref)} />
         </NavigationContainer>
       </LoginContext.Provider>
     );
