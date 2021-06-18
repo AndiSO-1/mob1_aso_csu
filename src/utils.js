@@ -9,6 +9,13 @@ const manageException = (code = null) => {
       text2: "Veuillez vérifier vos identifiants avant de réessayer!"
     };
     break;
+    case 500:
+    return {
+      type: 'error',
+      text1: 'Une erreur côté serveur est survenue.',
+      text2: "Essayer de vous déconnecter et reconnecter.\nSi l'erreur persiste contactez un administrateur pour plus d'infos."
+    };
+    break;
     default:
     return {
       type: 'error',
