@@ -14,7 +14,7 @@ import {
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
 // Components
-import Home from "../pages/Home";
+import Home from "./Home";
 
 import manageException from "../utils";
 
