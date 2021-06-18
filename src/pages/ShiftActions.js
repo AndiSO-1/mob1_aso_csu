@@ -10,6 +10,11 @@ import {
 // Contexts
 import { LoginContext } from '../contexts/LoginContext'; // Perm login to change user status
 
+import manageException from "../utils";
+
+// Toast message
+import Toast from 'react-native-toast-message';
+
 export default class ShiftActions extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +31,7 @@ export default class ShiftActions extends Component {
   async loadShiftActions(){
     let token = this.context.token;
     let id = this.props.route.params.id;
+    let connection_success = true;
 
     let shift_actions = await fetch(this.api + 'myactionsinshift/' + id, {
       method: 'GET',
@@ -38,14 +44,18 @@ export default class ShiftActions extends Component {
         return response.json();
       }
       else {
-        console.log(response);
+        connection_success = false;
+        Toast.show(manageException(response.status));
       }
     })
     .then(function(data){
-      return data.data;
+      if (connection_success){
+        return data.data;
+      }
     })
     .catch(function(error) {
-      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      connection_success = false;
+      Toast.show(manageException());
     });
 
     this.setState({
