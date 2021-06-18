@@ -37,22 +37,24 @@ export default class PharmaCheck extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Du lot {this.props.data.batch_number} de {this.props.data.drug}</Text>
-        <Text>pour le {this.formatDate(this.props.data.date)}</Text>
-        <Text>
-          Matin: <TextInput
+        <Text style={styles.title}>Du lot {this.props.data.batch_number} de {this.props.data.drug}</Text>
+        <Text style={styles.date}>pour le {this.formatDate(this.props.data.date)}</Text>
+        <View style={styles.child}>
+          <Text>Matin</Text>
+          <TextInput
             style={styles.input}
             onChangeText={(text) => this.handleText("start", text)}
             value={this.state.start}
           />
-          </Text>
-          <Text>
-          Soir: <TextInput
+        </View>
+        <View style={styles.child}>
+          <Text>Soir</Text>
+          <TextInput
             style={styles.input}
             onChangeText={(text) => this.handleText("end", text)}
             value={this.state.end}
           />
-        </Text>
+        </View>
         <Button
           onPress={() => null}
           title="Envoyer"
@@ -64,13 +66,33 @@ export default class PharmaCheck extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: 'lightblue',
     borderColor: "black",
     borderWidth: 1,
-    marginVertical:10,
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    paddingRight: "1em",
+    paddingLeft: "1em",
+    marginBottom: "1em",
+    marginRight: "1em",
+    marginLeft: "1em",
   },
   input: {
     borderColor: "black",
     borderWidth:1,
+    textAlign: "center",
+    backgroundColor: 'white',
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 15,
+  },
+  date: {
+    textAlign: "center",
+    marginBottom: "1em",
+  },
+  child: {
+    marginBottom: "1em",
+    textAlign: "center",
   },
 });
