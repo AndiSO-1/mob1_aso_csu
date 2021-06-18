@@ -82,48 +82,56 @@ export default class Consult extends Component {
 
   render() {
     return (
-      <View>
-        <Button
-            title="Garde"
-            onPress={this.showShift}
-          />
-          <Button
-            title="Stup"
-            onPress={this.showDrug}
-          />
-          <View>
-            {this.state.show == "shift" ? this.state.shift.length <= 0 ? <Text>Aucune information</Text> :
-              <FlatList
-                data={this.state.shift}
-                renderItem={
-                  ({item}) =>
-                    <Text
-                      onPress={
-                        () =>this.props.navigation.navigate('ShiftActions', {
-                          id: item.id,
-                          title: ("Dans le rapport du " + item.date + " à " + item.base)
-                        })
-                      }
-                    >
-                      Le {item.date} à {item.base}
-                    </Text>
-                  }
-                keyExtractor={item => item.id.toString()}
-              />
-              : null
-            }
-            {this.state.show == "drug" ? this.state.drug.length <= 0 ? <Text>Aucune information</Text> :
-              <FlatList
-                data={this.state.drug}
-                renderItem={({item}) => <Text>Semaine {item.week} à {item.base}</Text>}
-                keyExtractor={item => item.id.toString()}
-              />
-              : null
-            }
+      <View style={styles.container}>
+        <View style={styles.nav}>
+          <View style={styles.nav_child}>
+            <Button
+              color={this.state.show == this.show_shift ? "black" : ""}
+              title="Garde"
+              onPress={this.showShift}
+            />
           </View>
-          {this.state.show == this.show_shift ? this.state.shift.length <= 0 ? <Text>Aucune information</Text> :
-          {this.state.show == this.show_drug ? this.state.drug.length <= 0 ? <Text>Aucune information</Text> :
+          <View style={styles.nav_child}>
+            <Button
+              color={this.state.show == this.show_drug ? "black" : ""}
+              title="Stup"
+              onPress={this.showDrug}
+            />
+          </View>
         </View>
+
+        <View>
+          {this.state.show == this.show_shift ? this.state.shift.length <= 0 ? <Text>Aucune information</Text> :
+            <FlatList
+              data={this.state.shift}
+              renderItem={
+                ({item}) =>
+                  <Text
+                    style={styles.child}
+                    onPress={
+                      () =>this.props.navigation.navigate('ShiftActions', {
+                        id: item.id,
+                        title: ("Dans le rapport du " + item.date + " à " + item.base)
+                      })
+                    }
+                  >
+                    Le {item.date} à {item.base}
+                  </Text>
+                }
+              keyExtractor={item => item.id.toString()}
+            />
+            : null
+          }
+          {this.state.show == this.show_drug ? this.state.drug.length <= 0 ? <Text>Aucune information</Text> :
+            <FlatList
+              data={this.state.drug}
+              renderItem={({item}) => <Text style={styles.child}>Semaine {item.week} à {item.base}</Text>}
+              keyExtractor={item => item.id.toString()}
+            />
+            : null
+          }
+        </View>
+      </View>
     );
   }
 }
@@ -131,5 +139,24 @@ export default class Consult extends Component {
 Consult.contextType = LoginContext;
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: "start",
+    flexDirection: "column",
+  },
+  nav: {
+    justifyContent: "start",
+    flexDirection: "row",
+    marginBottom: "1em",
+  },
+  nav_child: {
+    flex: 1,
+  },
+  child: {
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    borderColor: "black",
+    borderWidth: 1,
+    marginBottom: "1em",
+  },
 });
