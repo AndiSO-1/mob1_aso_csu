@@ -141,28 +141,36 @@ export default class Login extends Component {
   render() {
 
     return (
-      <View>
-        <Text>Initiales</Text>
-        <TextInput style={styles.input} onChangeText={(text) => this.handleText("initials", text)}/>
+      <View style={styles.container}>
+        <View style={styles.child}>
+          <Text>Initiales</Text>
+          <TextInput style={styles.input} onChangeText={(text) => this.handleText("initials", text)}/>
+        </View>
 
-        <Text>Mot de passe</Text>
-        <TextInput
-          secureTextEntry={true}
-          style={styles.input}
-          onChangeText={(text) => this.handleText("password", text)}
-        />
+        <View style={styles.child}>
+          <Text>Mot de passe</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            onChangeText={(text) => this.handleText("password", text)}
+          />
+        </View>
 
-        <Picker selectedValue={this.state.base} onValueChange={this.updateBase}>
-          {this.state.bases == [] ? <Text>nothing</Text> : (
-            this.state.bases.map(b =>
-              <Picker.Item key={b.id} label={b.name} value={b.id} />)
-          )}
-        </Picker>
+        <View style={styles.child}>
+          <Picker selectedValue={this.state.base} onValueChange={this.updateBase}>
+            {this.state.bases == [] ? <Text>nothing</Text> : (
+              this.state.bases.map(b =>
+                <Picker.Item key={b.id} label={b.name} value={b.id} />)
+            )}
+          </Picker>
+        </View>
 
-        <Button
-          onPress={this.login}
-          title="Se connecter"
-        />
+        <View style={styles.child}>
+          <Button
+            onPress={this.login}
+            title="Se connecter"
+          />
+        </View>
       </View>
     );
   }
@@ -171,10 +179,23 @@ export default class Login extends Component {
 Login.contextType = LoginContext;
 
 const styles = StyleSheet.create({
-  input: {
+  container: {
     flex: 1,
+    justifyContent: "start",
+    flexDirection: "column",
+    paddingTop: "4em",
+  },
+  child: {
+    marginTop: "1em",
+    marginBottom: "1em",
+    marginRight: "1em",
+    marginLeft: "1em",
+    textAlign: "center",
+  },
+  input: {
     borderColor: "black",
     borderWidth: 1,
+    textAlign: "center",
   },
   error:{
     color: "red",
