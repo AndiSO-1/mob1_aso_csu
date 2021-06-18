@@ -15,6 +15,11 @@ import { LoginContext } from '../contexts/LoginContext'; // Perm login to change
 import PharmaCheck from "../components/PharmaCheck";
 import NovaCheck from "../components/NovaCheck";
 
+import manageException from "../utils";
+
+// Toast message
+import Toast from 'react-native-toast-message';
+
 export default class Report extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +38,7 @@ export default class Report extends Component {
   async getMissingChecks(){
     let token = this.context.token;
     let id_base = this.context.base.id;
+    let connection_success = true;
 
     let missing_checks = await fetch(this.api + 'missingchecks/' + id_base, {
       method: 'GET',
@@ -45,14 +51,18 @@ export default class Report extends Component {
         return response.json();
       }
       else {
-        console.log('Mauvaise réponse du réseau');
+        connection_success = false;
+        Toast.show(manageException(response.status));
       }
     })
     .then(function(data){
-      return data;
+      if (connection_success){
+        return data;
+      }
     })
     .catch(function(error) {
-      console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      connection_success = false;
+      Toast.show(manageException());
     });
 
     this.setState({
