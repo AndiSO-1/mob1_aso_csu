@@ -26,10 +26,10 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      token : localStorage.getItem('token') ?? null,
+      token : localStorage.getItem('token') != "null" ? localStorage.getItem('token') : null,
       base: {
-        id:(localStorage.getItem('base_id') ?? ""),
-        name:(localStorage.getItem('base_name') ?? ""),
+        id: localStorage.getItem('base_id') != "null" ? localStorage.getItem('base_id') : null,
+        name: localStorage.getItem('base_name') != "null" ? localStorage.getItem('base_name') : null,
       },
     };
   }
