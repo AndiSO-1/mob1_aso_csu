@@ -79,6 +79,7 @@ export default class Schedule extends Component {
           renderItem={({item, index}) => <UnconfirmedSchedule data={item} api={this.api} token={this.context.token} confirm={() => this.removeUnconfirmedSchedule(index)} />}
           keyExtractor={(item, index) => index.toString()}
         />
+        {this.state.unconfirmed_workplans ? null : <Text>Vous avez confirmé tous vos horaires</Text>}
       </View>
     );
   }
