@@ -55,6 +55,15 @@ export default class UnconfirmedSchedule extends Component {
         text2: "Vous ne pouvez pas repasser en inconnu!"
       });
     }
+    // Tell the user is msg is to small or to big
+    else if (this.state.selected_status == this.discuss && this.state.reason.length < 10
+      || this.state.selected_status == this.discuss && this.state.reason.length > 50){
+      Toast.show({
+        type: 'error',
+        text1: 'Modification annulée!',
+        text2: "Vous devez entrer un text entre 10 et 50 lettres!"
+      });
+    }
     else
     {
       fetch(this.props.api + 'confirmworkplan', {
@@ -163,7 +172,7 @@ export default class UnconfirmedSchedule extends Component {
         {this.state.selected_status == this.discuss ?
           <View>
             <Text>Raison (10-50 lettres):</Text>
-            <TextInput style={styles.input} onChangeText={(text) => this.handleText("reason", text)} defaultValue={this.props.data.reason}/>
+            <TextInput style={styles.input} onChangeText={(text) => this.handleText("reason", text)} defaultValue={this.props.data.reason} maxLength={50}/>
           </View> : null
         }
         <Button
