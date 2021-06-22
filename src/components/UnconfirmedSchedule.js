@@ -37,39 +37,60 @@ export default class UnconfirmedSchedule extends Component {
     let fun_confirm = this.props.confirm;
     let is_confirm = this.state.selected_status == this.confirm;
 
-    fetch(this.props.api + 'confirmworkplan', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-      },
-      body: JSON.stringify({
-        id: this.props.data.id,
-        confirmation: this.whichStatusValue(this.state.selected_status),
-        reason: this.state.reason,
+    // Tell the user that he is already on unknow and need to do a change
+    if (this.whichStatus(this.props.data.confirmation) == this.unknown && this.state.selected_status == this.unknown)
+    {
+      Toast.show({
+        type: 'error',
+        text1: 'Modification annulée!',
+        text2: "Veuillez faire une changement avant d'envoyer!"
+      });
+    }
+    // Tell the user that he can't go back on the status
+    else if (this.whichStatus(this.props.data.confirmation) == this.discuss && this.state.selected_status == this.unknown)
+    {
+      Toast.show({
+        type: 'error',
+        text1: 'Modification annulée!',
+        text2: "Vous ne pouvez pas repasser en inconnu!"
+      });
+    }
+    else
+    {
+      fetch(this.props.api + 'confirmworkplan', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          id: this.props.data.id,
+          confirmation: this.whichStatusValue(this.state.selected_status),
+          reason: this.state.reason,
+        })
       })
-    })
-    .then(function(response) {
-      if(response.ok) {
-        Toast.show({
-          type: 'success',
-          text1: 'Modification réussi!',
-          text2: success_message
-        });
-        if (is_confirm)
-        {
-          fun_confirm();
+      .then(function(response) {
+        if(response.ok) {
+          Toast.show({
+            type: 'success',
+            text1: 'Modification réussi!',
+            text2: success_message
+          });
+          if (is_confirm)
+          {
+            fun_confirm();
+          }
         }
-      }
-      else {
-        Toast.show(manageException(response.status));
-      }
-    })
-    .catch(function(error) {
-      console.log(error);
-      Toast.show(manageException());
-    });
+        else {
+          Toast.show(manageException(response.status));
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+        Toast.show(manageException());
+      });
+    }
   }
 
   formatDate = (val) => {
