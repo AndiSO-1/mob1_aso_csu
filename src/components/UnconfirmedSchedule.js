@@ -87,7 +87,6 @@ export default class UnconfirmedSchedule extends Component {
         }
       })
       .catch(function(error) {
-        console.log(error);
         Toast.show(manageException());
       });
     }
