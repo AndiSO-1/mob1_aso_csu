@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Button,
+  TouchableOpacity,
 } from 'react-native';
 
 export default class Home extends Component {
@@ -27,6 +28,15 @@ export default class Home extends Component {
             }
           />
         </View>
+        <View style={styles.child}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('Schedule')
+            }
+            style={styles.button}>
+            <Text>{"Horaires à valider"}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -45,5 +55,10 @@ const styles = StyleSheet.create({
     marginRight: "1em",
     marginLeft: "1em",
     textAlign: "center",
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "rgb(33, 150, 243)",
+    padding: 10
   },
 });
