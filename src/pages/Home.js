@@ -88,7 +88,7 @@ export default class Home extends Component {
                 this.props.navigation.navigate('Schedule')
               }
               style={styles.button}>
-              <Text style={styles.button_text}>{"HORAIRES À VALIDER"}<Text style={styles.nb_schedules}>{this.state.unconfirmed_workplans}</Text></Text>
+              <Text style={styles.button_text}>{"HORAIRES À CONFIRMER"}<Text style={styles.nb_schedules}>{this.state.unconfirmed_workplans}</Text></Text>
             </TouchableOpacity>
           </View> : null
         }
