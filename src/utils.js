@@ -2,6 +2,13 @@ const manageException = (code = null) => {
   code = code ? parseInt(code) : "inconnu";
 
   switch (code) {
+    case 400:
+    return {
+      type: 'error',
+      text1: "Action impossible!",
+      text2: "Veuillez vérifier les informations saisies avant de réessayer!"
+    };
+    break;
     case 401:
     return {
       type: 'error',
