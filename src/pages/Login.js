@@ -171,6 +171,10 @@ export default class Login extends Component {
             title="Se connecter"
           />
         </View>
+
+        <View style={styles.child}>
+          <Text>Version: eval ASO</Text>
+        </View>
       </View>
     );
   }
