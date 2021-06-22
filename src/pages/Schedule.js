@@ -59,11 +59,11 @@ export default class Schedule extends Component {
     });
   }
 
-  removeUnconfirmedSchedule = () => {
-    let unconfirmed_schedule = this.state.unconfirmed_schedule;
+  removeUnconfirmedSchedule = (index) => {
+    let unconfirmed_schedule = this.state.unconfirmed_workplans;
     unconfirmed_schedule.splice(index, 1);
     this.setState({
-      unconfirmed_schedule: unconfirmed_schedule,
+      unconfirmed_workplans: unconfirmed_schedule,
     });
   }
 
