@@ -9,9 +9,16 @@ import {
   TextInput,
 } from 'react-native';
 
+import manageException from "../utils";
+
+// Toast message
+import Toast from 'react-native-toast-message';
+
 export default class UnconfirmedSchedule extends Component {
   constructor(props) {
     super(props);
+
+    this.confirmWorkplan = this.confirmWorkplan.bind(this);
 
     this.unknown = "Inconnu";
     this.discuss = "A discuter";
@@ -19,9 +26,50 @@ export default class UnconfirmedSchedule extends Component {
 
     this.state = {
       status: [this.unknown, this.discuss, this.confirm],
-      selected_status: this.whichStatus(this.props.reason),
-      reason: "",
+      selected_status: this.whichStatus(this.props.data.confirmation),
+      reason: this.props.data.reason,
     };
+  }
+
+  async confirmWorkplan() {
+    let token = this.props.token;
+    let success_message = "Modification de l'horaire " + this.formatDate(this.props.data.date) + " en " + this.state.selected_status + " réussi!";
+    let fun_confirm = this.props.confirm;
+    let is_confirm = this.state.selected_status == this.confirm;
+
+    fetch(this.props.api + 'confirmworkplan', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        id: this.props.data.id,
+        confirmation: this.whichStatusValue(this.state.selected_status),
+        reason: this.state.reason,
+      })
+    })
+    .then(function(response) {
+      if(response.ok) {
+        Toast.show({
+          type: 'success',
+          text1: 'Modification réussi!',
+          text2: success_message
+        });
+        if (is_confirm)
+        {
+          fun_confirm();
+        }
+      }
+      else {
+        Toast.show(manageException(response.status));
+      }
+    })
+    .catch(function(error) {
+      console.log(error);
+      Toast.show(manageException());
+    });
   }
 
   formatDate = (val) => {
@@ -50,15 +98,32 @@ export default class UnconfirmedSchedule extends Component {
     }
   }
 
+  whichStatusValue(val){
+    switch (val) {
+      case this.unknown:
+        return null;
+      break;
+      case this.discuss:
+        return 0;
+      break;
+      case this.confirm:
+        return 1;
+      break;
+      default:
+        return null;
+    }
+  }
+
   updateStatus = (val) => {
     this.setState({
+      reason: this.props.data.reason,
       selected_status: val
     });
   }
 
   handleText(input, value) {
     this.setState({
-      [input]: value
+      [input]: value,
     });
   }
 
@@ -78,11 +143,11 @@ export default class UnconfirmedSchedule extends Component {
         {this.state.selected_status == this.discuss ?
           <View>
             <Text>Raison (10-50 lettres):</Text>
-            <TextInput style={styles.input} onChangeText={(text) => this.handleText("reason", text)}/>
+            <TextInput style={styles.input} onChangeText={(text) => this.handleText("reason", text)} defaultValue={this.props.data.reason}/>
           </View> : null
         }
         <Button
-          onPress={() => null}
+          onPress={() => this.confirmWorkplan()}
           title="Enregister"
         />
       </View>
