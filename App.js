@@ -14,6 +14,7 @@ import Login from "./src/pages/Login";
 import Consult from "./src/pages/Consult";
 import Report from "./src/pages/Report";
 import ShiftActions from "./src/pages/ShiftActions";
+import Schedule from "./src/pages/Schedule";
 
 // Components
 import BtnLogout from "./src/components/BtnLogout";
@@ -106,6 +107,15 @@ export default class App extends Component {
               <Stack.Screen
                 name="ShiftActions"
                 component={ShiftActions}
+                options={{
+                  headerRight: () => (
+                    <BtnLogout logout={this.logout}/>
+                  ),
+                }}
+              />
+              <Stack.Screen
+                name="Schedule"
+                component={Schedule}
                 options={{
                   headerRight: () => (
                     <BtnLogout logout={this.logout}/>
