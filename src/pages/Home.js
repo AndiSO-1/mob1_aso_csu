@@ -62,12 +62,6 @@ export default class Home extends Component {
     this.getUnconfirmedWorkplans();
   }
 
-  useEffect  () {
-    this.state = {
-      unconfirmed_workplans: 0,
-    };
-  }
-
   render() {
     return (
       <View style={styles.container}>
