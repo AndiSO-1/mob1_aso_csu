@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   FlatList,
+  Text,
 } from 'react-native';
 
 // Contexts
@@ -74,12 +75,12 @@ export default class Schedule extends Component {
   render() {
     return (
       <View>
+        {this.state.unconfirmed_workplans ? <Text style={styles.child}>Vous avez {this.state.unconfirmed_workplans.length} horaires à confirmer</Text> : <Text style={styles.child}>Vous avez confirmé tous vos horaires</Text>}
         <FlatList
           data={this.state.unconfirmed_workplans}
           renderItem={({item, index}) => <UnconfirmedSchedule data={item} api={this.api} token={this.context.token} confirm={() => this.removeUnconfirmedSchedule(index)} />}
           keyExtractor={(item, index) => index.toString()}
         />
-        {this.state.unconfirmed_workplans ? null : <Text>Vous avez confirmé tous vos horaires</Text>}
       </View>
     );
   }
@@ -88,5 +89,16 @@ export default class Schedule extends Component {
 Schedule.contextType = LoginContext;
 
 const styles = StyleSheet.create({
-
+  child: {
+    backgroundColor: 'lightblue',
+    paddingTop: "1em",
+    paddingBottom: "1em",
+    paddingRight: "1em",
+    paddingLeft: "1em",
+    borderColor: "black",
+    borderWidth: 1,
+    marginBottom: "1em",
+    marginRight: "1em",
+    marginLeft: "1em",
+  },
 });
